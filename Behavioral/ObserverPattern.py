@@ -1,0 +1,45 @@
+#********************************************************************
+# Filename:  ObserverPattern.py
+# Author:    Javier Montenegro (https://javiermontenegro.github.io/)
+# Copyright:
+# Details:   This code is the implementation of the observer pattern.
+#*********************************************************************
+
+class Subject:
+    def __init__(self):
+        self.__observers = []
+
+    def register(self, observer):
+        self.__observers.append(observer)
+
+    def notify(self, *args, **kwargs):
+        for observer in self.__observers:
+            observer.notify(self, *args, **kwargs)
+
+
+class Observer1:
+    def __init__(self, subject):
+        subject.register(self)
+
+    def notify(self, subject, *args):
+        print(type(self).__name__,': Got', args, 'From', subject)
+
+
+class Observer2:
+    def __init__(self, subject):
+        subject.register(self)
+
+    def notify(self, subject, *args):
+        print(type(self).__name__, ': Got', args, 'From', subject)
+
+
+if __name__ == "__main__":
+
+    subject = Subject()
+
+    # Registers observer with subject
+    observer1 = Observer1(subject)
+    observer2 = Observer2(subject)
+
+    subject.notify('Notification.')
+
